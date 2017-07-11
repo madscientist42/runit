@@ -1,4 +1,5 @@
 Copyright (c) 2001-2008, Gerrit Pape
+
 Copyright (c) 2017, Frank Earl, David Sugar
 
 All rights reserved.
