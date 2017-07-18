@@ -48,6 +48,11 @@ checks if the file
 .I /etc/runit/reboot
 exists and has the execute by owner permission set.
 If so, the system is rebooted, it's halted otherwise.
+If
+.I /etc/runit/nosync
+exists,
+.B runit
+doesn't invoke sync(). This is useful in vservers.
 .SH CTRL-ALT-DEL
 If
 .B runit

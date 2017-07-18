@@ -41,6 +41,11 @@ void sig_int_handler (void) {
 }
 void sig_child_handler (void) { write(selfpipe[1], "", 1); }
 
+void sync_if_needed() {
+  struct stat s;
+  if (stat(NOSYNC, &s) == -1) sync();
+}
+
 int main (int argc, const char * const *argv, char * const *envp) {
   const char * prog[2];
   int pid, pid2;
@@ -305,28 +310,28 @@ int main (int argc, const char * const *argv, char * const *envp) {
   case -1:
   if ((stat(REBOOT, &s) != -1) && (s.st_mode & S_IXUSR)) {
     strerr_warn2(INFO, "system reboot.", 0);
-    sync();
+    sync_if_needed();
     reboot_system(RB_AUTOBOOT);
   }
   else {
 #ifdef RB_POWER_OFF
     strerr_warn2(INFO, "power off...", 0);
-    sync();
+    sync_if_needed();
     reboot_system(RB_POWER_OFF);
     sleep(2);
 #endif
 #ifdef RB_HALT_SYSTEM
     strerr_warn2(INFO, "system halt.", 0);
-    sync();
+    sync_if_needed();
     reboot_system(RB_HALT_SYSTEM);
 #else
 #ifdef RB_HALT
     strerr_warn2(INFO, "system halt.", 0);
-    sync();
+    sync_if_needed();
     reboot_system(RB_HALT);
 #else
     strerr_warn2(INFO, "system reboot.", 0);
-    sync();
+    sync_if_needed();
     reboot_system(RB_AUTOBOOT);
 #endif
 #endif
