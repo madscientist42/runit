@@ -3,7 +3,7 @@
 #include <sys/types.h>
 #include <sys/file.h>
 #include <fcntl.h>
-#include "hasflock.h"
+#include "config.h"
 #include "lock.h"
 
 #ifdef HASFLOCK

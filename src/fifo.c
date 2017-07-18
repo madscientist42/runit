@@ -2,6 +2,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "config.h"
 #include "fifo.h"
 
 
