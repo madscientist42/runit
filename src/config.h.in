@@ -1,0 +1,7 @@
+#cmakedefine HASDIRENT
+#cmakedefine HASPOLL
+#cmakedefine HASMKFIFO
+#cmakedefine HASFLOCK
+#cmakedefine HASSIGPROCMASK
+#cmakedefine HASSIGACTION
+#cmakedefine HASWAITPID
