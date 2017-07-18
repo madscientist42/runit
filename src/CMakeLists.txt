@@ -96,3 +96,12 @@ TARGET_LINK_LIBRARIES(runsv runit_unix runit_byte runit_time)
 ADD_EXECUTABLE(runsvdir runsvdir.c)
 TARGET_LINK_LIBRARIES(runsvdir runit_unix runit_byte runit_time)
 
+ADD_EXECUTABLE(runsvstat runsvstat.c)
+TARGET_LINK_LIBRARIES(runsvstat runit_unix runit_byte runit_time)
+
+ADD_EXECUTABLE(runsvcrtl runsvctrl.c)
+TARGET_LINK_LIBRARIES(runsvcrtl runit_unix runit_byte runit_time)
+
+ADD_EXECUTABLE(sv sv.c)
+TARGET_LINK_LIBRARIES(sv runit_unix runit_byte runit_time)
+
