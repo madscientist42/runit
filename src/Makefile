@@ -6,10 +6,10 @@ check: $(IT)
 	./check-local $(IT)
 
 runit: load runit.o unix.a byte.a
-	./load runit unix.a byte.a -static
+	./load runit unix.a byte.a
 
 runit-init: load runit-init.o unix.a byte.a
-	./load runit-init unix.a byte.a -static
+	./load runit-init unix.a byte.a
 
 runsv: load runsv.o unix.a byte.a time.a
 	./load runsv unix.a byte.a time.a
