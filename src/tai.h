@@ -3,7 +3,7 @@
 #ifndef TAI_H
 #define TAI_H
 
-#include "uint64.h"
+#include "config.h"
 
 struct tai {
   uint64 x;
