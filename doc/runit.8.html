@@ -34,6 +34,8 @@ stage 2 if it is running, and runs <i>/etc/runit/3</i>. The systems tasks to shu
 and possibly halt or reboot the system are done here. If stage 3 returns,
 <b>runit</b> checks if the file <i>/etc/runit/reboot</i> exists and has the execute by
 owner permission set. If so, the system is rebooted, it&rsquo;s halted otherwise.
+If <i>/etc/runit/nosync</i> exists, <b>runit</b> doesn&rsquo;t invoke
+sync(). This is useful in vservers.
 
 <h2><a name='sect6'>Ctrl-alt-del</a></h2>
 If <b>runit</b> receives the ctrl-alt-del keyboard request and the file
