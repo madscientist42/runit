@@ -3,7 +3,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "error.h"
-#include "haswaitp.h"
+#include "config.h"
 
 #ifdef HASWAITPID
 

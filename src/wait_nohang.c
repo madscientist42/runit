@@ -2,7 +2,7 @@
 
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "haswaitp.h"
+#include "config.h"
 
 int wait_nohang(wstat) int *wstat;
 {
