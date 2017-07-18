@@ -85,5 +85,14 @@ ADD_LIBRARY(runit_unix STATIC
 
 # Now declare runit's executables proper...
 ADD_EXECUTABLE(runit runit.c)
+TARGET_LINK_LIBRARIES(runit runit_unix runit_byte)
+
+ADD_EXECUTABLE(runit-init runit-init.c)
+TARGET_LINK_LIBRARIES(runit-init runit_unix runit_byte)
  
+ADD_EXECUTABLE(runsv runsv.c)
+TARGET_LINK_LIBRARIES(runsv runit_unix runit_byte runit_time)
+
+ADD_EXECUTABLE(runsvdir runsvdir.c)
+TARGET_LINK_LIBRARIES(runsvdir runit_unix runit_byte runit_time)
 

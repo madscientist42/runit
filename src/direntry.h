@@ -6,7 +6,7 @@
 
 #include <sys/types.h>
 #include "config.h"
-if defined(HASDIRENT)
+#if defined(HASDIRENT)
 	#include <dirent.h>
 	#define direntry struct dirent
 #else
