@@ -7,7 +7,8 @@ include(CheckTypeSize)
 
 # Some things work by knowing that we have a header...
 check_include_file(dirent.h     HASDIRENT)
-check_include_file(poll.h	HASPOLL)
+check_include_file(poll.h		HASPOLL)
+check_include_file(sys/select.h HASSYSSELECT)
 
 # Some things work by checking for it in the right header...
 check_symbol_exists(mkfifo	"sys/stat.h"  		HASMKFIFO)
