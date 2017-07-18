@@ -1,0 +1,23 @@
+Description: Fix factual error in manpage.
+ Log ./finish script is not actually invoked. It is not clear, whether this
+ limitation is worth lifting.
+Author: Dmitry Bogatov <KAction@gnu.org>
+Forwarded: no
+Last-Update: 2016-08-31
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/runit-2.1.2/man/runsv.8
++++ b/runit-2.1.2/man/runsv.8
+@@ -54,10 +54,8 @@ and
+ .IR service /finish's
+ standard output to the pipe, switches to the directory
+ .IR service /log
+-and starts ./run (and ./finish) exactly as described above for the
+-.I service
+-directory.
+-The standard input of the log service is redirected to read from the pipe.
++and starts ./run script. The standard input of the log service
++is redirected to read from the pipe.
+ .P
+ .B runsv
+ maintains status information in a binary format (compatible to the
