@@ -1,0 +1,87 @@
+From d99515f6c8427e5f1c8f252532df8858bdef1007 Mon Sep 17 00:00:00 2001
+From: Gerrit Pape <pape@smarden.org>
+Date: Wed, 7 May 2008 23:51:16 +0000
+Subject: [PATCH] default directory for services on Debian is /etc/service/,
+ not /service/
+
+---
+ runit-2.1.2/man/runsv.8      | 4 ++--
+ runit-2.1.2/man/runsvchdir.8 | 4 ++--
+ runit-2.1.2/man/sv.8         | 4 ++--
+ runit-2.1.2/src/sv.c         | 2 +-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/runit-2.1.2/man/runsv.8 b/runit-2.1.2/man/runsv.8
+index 7c5abfc..75bc73a 100644
+--- a/runit-2.1.2/man/runsv.8
++++ b/runit-2.1.2/man/runsv.8
+@@ -157,9 +157,9 @@ This command is ignored if it is given to
+ .IR service /log/supervise/control.
+ .P
+ Example: to send a TERM signal to the socklog-unix service, either do
+-  # sv term /service/socklog-unix
++  # sv term /etc/service/socklog-unix
+  or
+-  # printf t >/service/socklog-unix/supervise/control
++  # printf t >/etc/service/socklog-unix/supervise/control
+ .P
+ .BR printf (1)
+ usually blocks if no
+diff --git a/runit-2.1.2/man/runsvchdir.8 b/runit-2.1.2/man/runsvchdir.8
+index f7f94dc..a5fc180 100644
+--- a/runit-2.1.2/man/runsvchdir.8
++++ b/runit-2.1.2/man/runsvchdir.8
+@@ -27,13 +27,13 @@ with a symlink pointing to
+ .IR dir .
+ .P
+ Normally 
+-.I /service
++.I /etc/service
+ is a symlink to
+ .IR current ,
+ and
+ .BR runsvdir (8)
+ is running
+-.IR /service/ .
++.IR /etc/service/ .
+ .SH EXIT CODES
+ .B runsvchdir
+ prints an error message and exits 111 on error.
+diff --git a/runit-2.1.2/man/sv.8 b/runit-2.1.2/man/sv.8
+index 7ed9852..fa56443 100644
+--- a/runit-2.1.2/man/sv.8
++++ b/runit-2.1.2/man/sv.8
+@@ -30,7 +30,7 @@ If
+ .I service
+ doesn't start with a dot or slash and doesn't end with a slash, it is
+ searched in the default services directory
+-.IR /service/ ,
++.IR /etc/service/ ,
+ otherwise relative to the current directory.
+ .P
+ .I command
+@@ -232,7 +232,7 @@ This option implies
+ .TP
+ .B SVDIR
+ The environment variable $SVDIR overrides the default services directory
+-.IR /service/ .
++.IR /etc/service/ .
+ .TP
+ .B SVWAIT
+ The environment variable $SVWAIT overrides the default 7 seconds to wait
+diff --git a/runit-2.1.2/src/sv.c b/runit-2.1.2/src/sv.c
+index 0125795..887e9d1 100644
+--- a/runit-2.1.2/src/sv.c
++++ b/runit-2.1.2/src/sv.c
+@@ -32,7 +32,7 @@
+ char *progname;
+ char *action;
+ char *acts;
+-char *varservice ="/service/";
++char *varservice ="/etc/service/";
+ char **service;
+ char **servicex;
+ unsigned int services;
+-- 
+2.0.1
+

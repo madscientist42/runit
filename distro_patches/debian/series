@@ -1,0 +1,9 @@
+0005-patch-etc-runit-2-for-FHS.patch
+0001-default-directory-for-services-on-Debian-is-etc-servi.diff
+0002-support-etc-runit-nosync-file-to-make-sync-on-shutdow.diff
+0003-utmpset.c-mixes-int32_t-and-time_t.diff
+0004-src-Makefile-don-t-use-static-to-link-runit-runit-ini.diff
+0006-make-buildsystem-respect-CFLAGS.patch
+0007-move-communication-files.patch
+0008-emulate-sysv-runlevel-5.patch
+0009-fix-error-in-manpage.patch

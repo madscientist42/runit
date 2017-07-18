@@ -1,0 +1,102 @@
+Description: Move communication files under /run
+ Runit by default uses files /etc/runit/stop and /etc/runit/reboot.
+ This configuration will not work when /etc is mounted read-only,
+ as such this patch renames this files into /run/runit.stop and
+ /run/runit.reboot
+Author: Dmitry Bogatov <KAction@gnu.org>
+Last-Update: 2016-06-02
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/runit-2.1.2/etc/debian/1
++++ b/runit-2.1.2/etc/debian/1
+@@ -6,5 +6,5 @@ PATH=/command:/sbin:/bin:/usr/sbin:/usr/
+ /etc/init.d/rcS
+ /etc/init.d/rmnologin
+ 
+-touch /etc/runit/stopit
+-chmod 0 /etc/runit/stopit
++touch /run/runit.stopit
++chmod 0 /run/runit.stopit
+--- a/runit-2.1.2/etc/debian/3
++++ b/runit-2.1.2/etc/debian/3
+@@ -4,7 +4,7 @@ exec 2>&1
+ PATH=/command:/sbin:/bin:/usr/sbin:/usr/bin
+ 
+ LAST=0
+-test -x /etc/runit/reboot && LAST=6
++test -x /run/runit.reboot && LAST=6
+ 
+ echo 'Waiting for services to stop...'
+ sv -w196 force-stop /service/*
+--- a/runit-2.1.2/etc/debian/ctrlaltdel
++++ b/runit-2.1.2/etc/debian/ctrlaltdel
+@@ -4,6 +4,6 @@ PATH=/bin:/usr/bin
+ MSG="System is going down in 14 seconds..."
+ 
+ # echo 'disabled.' ; exit
+-touch /etc/runit/stopit
+-chmod 100 /etc/runit/stopit && echo "$MSG" | wall
++touch /etc/runit.stopit
++chmod 100 /etc/runit.stopit && echo "$MSG" | wall
+ /bin/sleep 14
+--- a/runit-2.1.2/man/runit-init.8
++++ b/runit-2.1.2/man/runit-init.8
+@@ -26,9 +26,9 @@ To signal
+ the system halt request,
+ .B runit-init
+ removes all permissions of the file
+-.I /etc/runit/reboot
++.I /run/runit.reboot
+ (chmod 0), and sets the execute by owner permission of the file
+-.I /etc/runit/stopit
++.I /run/runit.stopit
+ (chmod 100).
+ Then a CONT signal is sent to
+ .BR runit (8).
+@@ -40,9 +40,9 @@ To signal
+ the system reboot request,
+ .B runit-init
+ sets the execute by owner permission of the files
+-.I /etc/runit/reboot
++.I /run/runit.reboot
+ and
+-.I /etc/runit/stopit
++.I /run/runit.stopit
+ (chmod 100). Then a CONT signal is sent to
+ .BR runit (8).
+ .SH EXIT CODES
+--- a/runit-2.1.2/man/runit.8
++++ b/runit-2.1.2/man/runit.8
+@@ -45,11 +45,11 @@ done here.
+ If stage 3 returns,
+ .B runit
+ checks if the file
+-.I /etc/runit/reboot
++.I /run/runit.reboot
+ exists and has the execute by owner permission set.
+ If so, the system is rebooted, it's halted otherwise.
+ If
+-.I /etc/runit/nosync
++.I /run/runit.nosync
+ exists,
+ .B runit
+ doesn't invoke sync(). This is useful in vservers.
+@@ -70,7 +70,7 @@ only accepts signals in stage 2.
+ If
+ .B runit
+ receives a CONT signal and the file
+-.I /etc/runit/stopit
++.I /run/runit.stopit
+ exists and has the execute by owner permission set,
+ .B runit
+ is told to shutdown the system.
+--- a/runit-2.1.2/src/runit.h
++++ b/runit-2.1.2/src/runit.h
+@@ -1,5 +1,5 @@
+ #define RUNIT "/sbin/runit"
+-#define STOPIT "/etc/runit/stopit"
+-#define REBOOT "/etc/runit/reboot"
++#define STOPIT "/run/runit.stopit"
++#define REBOOT "/run/runit.reboot"
+ #define NOSYNC "/run/runit.nosync"
+ #define CTRLALTDEL "/etc/runit/ctrlaltdel"

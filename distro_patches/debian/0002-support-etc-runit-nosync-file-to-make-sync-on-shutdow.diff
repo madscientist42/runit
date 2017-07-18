@@ -1,0 +1,95 @@
+From aed8774b9aa813cbb3e8b732f6f7ae132f86c82b Mon Sep 17 00:00:00 2001
+From: Andras Korn <korn-debbugs@elan.rulez.org>
+Date: Thu, 6 Dec 2012 16:57:06 +0100
+Subject: [PATCH] support /etc/runit/nosync file to make sync on
+ shutdown/reboot optional
+
+https://bugs.debian.org/695281
+---
+ runit-2.1.2/doc/runit.8.html |  2 ++
+ runit-2.1.2/man/runit.8      |  5 +++++
+ runit-2.1.2/src/runit.c      | 15 ++++++++++-----
+ runit-2.1.2/src/runit.h      |  1 +
+ 4 files changed, 18 insertions(+), 5 deletions(-)
+
+--- a/runit-2.1.2/doc/runit.8.html
++++ b/runit-2.1.2/doc/runit.8.html
+@@ -34,6 +34,8 @@ stage 2 if it is running, and runs <i>/e
+ and possibly halt or reboot the system are done here. If stage 3 returns,
+ <b>runit</b> checks if the file <i>/etc/runit/reboot</i> exists and has the execute by
+ owner permission set. If so, the system is rebooted, it&rsquo;s halted otherwise.
++If <i>/etc/runit/nosync</i> exists, <b>runit</b> doesn&rsquo;t invoke
++sync(). This is useful in vservers.
+ 
+ <h2><a name='sect6'>Ctrl-alt-del</a></h2>
+ If <b>runit</b> receives the ctrl-alt-del keyboard request and the file
+--- a/runit-2.1.2/man/runit.8
++++ b/runit-2.1.2/man/runit.8
+@@ -48,6 +48,11 @@ checks if the file
+ .I /etc/runit/reboot
+ exists and has the execute by owner permission set.
+ If so, the system is rebooted, it's halted otherwise.
++If
++.I /etc/runit/nosync
++exists,
++.B runit
++doesn't invoke sync(). This is useful in vservers.
+ .SH CTRL-ALT-DEL
+ If
+ .B runit
+--- a/runit-2.1.2/src/runit.c
++++ b/runit-2.1.2/src/runit.c
+@@ -41,6 +41,11 @@ void sig_int_handler (void) {
+ }
+ void sig_child_handler (void) { write(selfpipe[1], "", 1); }
+ 
++void sync_if_needed() {
++  struct stat s;
++  if (stat(NOSYNC, &s) == -1) sync();
++}
++
+ int main (int argc, const char * const *argv, char * const *envp) {
+   const char * prog[2];
+   int pid, pid2;
+@@ -305,28 +310,28 @@ int main (int argc, const char * const *
+   case -1:
+   if ((stat(REBOOT, &s) != -1) && (s.st_mode & S_IXUSR)) {
+     strerr_warn2(INFO, "system reboot.", 0);
+-    sync();
++    sync_if_needed();
+     reboot_system(RB_AUTOBOOT);
+   }
+   else {
+ #ifdef RB_POWER_OFF
+     strerr_warn2(INFO, "power off...", 0);
+-    sync();
++    sync_if_needed();
+     reboot_system(RB_POWER_OFF);
+     sleep(2);
+ #endif
+ #ifdef RB_HALT_SYSTEM
+     strerr_warn2(INFO, "system halt.", 0);
+-    sync();
++    sync_if_needed();
+     reboot_system(RB_HALT_SYSTEM);
+ #else
+ #ifdef RB_HALT
+     strerr_warn2(INFO, "system halt.", 0);
+-    sync();
++    sync_if_needed();
+     reboot_system(RB_HALT);
+ #else
+     strerr_warn2(INFO, "system reboot.", 0);
+-    sync();
++    sync_if_needed();
+     reboot_system(RB_AUTOBOOT);
+ #endif
+ #endif
+--- a/runit-2.1.2/src/runit.h
++++ b/runit-2.1.2/src/runit.h
+@@ -1,4 +1,5 @@
+ #define RUNIT "/sbin/runit"
+ #define STOPIT "/etc/runit/stopit"
+ #define REBOOT "/etc/runit/reboot"
++#define NOSYNC "/run/runit.nosync"
+ #define CTRLALTDEL "/etc/runit/ctrlaltdel"

@@ -1,0 +1,20 @@
+Description: Emulalate sysv runlevel 5 by default
+ Currently, not many daemons in Debian provides proper runscripts, so
+ if user switches to runit, she will on next reboot, that none of daemons,
+ including essential, like cron, are started.
+ .
+ This patch starts them in sysv-init style -- unmanaged, in background.
+ It is sub-par solution, but allows one-by-one transition.
+Author: Dmitry Bogatov
+Forwarded: not-needed
+Last-Update: 2016-06-09
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/runit-2.1.2/etc/debian/1
++++ b/runit-2.1.2/etc/debian/1
+@@ -8,3 +8,5 @@ PATH=/command:/sbin:/bin:/usr/sbin:/usr/
+ 
+ touch /run/runit.stopit
+ chmod 0 /run/runit.stopit
++
++[ -e /etc/runit/no-emulate-sysv ] || /etc/init.d/rc 5
