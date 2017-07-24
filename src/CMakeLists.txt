@@ -1,4 +1,3 @@
-
 # Declare the runit libraries...
 #
 # (All runit core lib functions are static linkages based on original build system...)
