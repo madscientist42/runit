@@ -3,6 +3,9 @@
 #ifndef SEEK_H
 #define SEEK_H
 
+#include <unistd.h>
+#include <sys/types.h>
+
 typedef unsigned long seek_pos;
 
 extern seek_pos seek_cur(int);
