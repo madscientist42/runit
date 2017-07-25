@@ -16,6 +16,7 @@
 #cmakedefine HASSIGACTION 1
 #cmakedefine HASWAITPID 1
 #cmakedefine HASSYSSELECT 1
+#cmakedefine HASUTMPX 1
 
 /* For now, declare what uint64 is...  (Shouldn't really NEED to do this 
    with any *MODERN* os, but...) */
