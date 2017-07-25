@@ -39,10 +39,10 @@ int main(int argc, const char * const *argv) {
   char sulong[FMT_ULONG];
 
   progname =*argv;
-  
+
   while ((opt =getopt(argc, argv, "s:vV")) != opteof) {
     switch(opt) {
-    case 's': 
+    case 's':
       scan_ulong(optarg, &sec);
       if ((sec < 1) || (sec > 600)) usage();
       break;
@@ -50,7 +50,7 @@ int main(int argc, const char * const *argv) {
       verbose =1;
       break;
     case 'V':
-      strerr_warn1("$Id: e2d6c574c5e56f9931323fbc0e539c7f9b829b73 $", 0);
+      strerr_warn1(VERSION, 0);
     case '?':
       usage();
     }
@@ -77,7 +77,7 @@ int main(int argc, const char * const *argv) {
       continue;
     }
     close(fd);
-    
+
     if ((fd =open_read("supervise/status")) == -1) {
       warn(*dir, "unable to open supervise/status: ", &strerr_sys);
       continue;
@@ -91,7 +91,7 @@ int main(int argc, const char * const *argv) {
         warn(*dir, ": unable to read supervise/status: bad format.", 0);
       continue;
     }
-    
+
     pid =(unsigned char)status[15];
     pid <<=8; pid +=(unsigned char)status[14];
     pid <<=8; pid +=(unsigned char)status[13];
@@ -100,13 +100,13 @@ int main(int argc, const char * const *argv) {
       warn(*dir, ": is down.", 0);
       continue;
     }
-    
+
     tai_unpack(status, &when);
     tai_now(&now);
     if (tai_less(&now, &when)) when =now;
     tai_sub(&when, &now, &when);
     is =tai_approx(&when);
-    
+
     if (is >= sec) {
       /* ok */
       if (verbose) {
@@ -118,7 +118,7 @@ int main(int argc, const char * const *argv) {
     }
     sleep(sec -is);
   }
-  if (fchdir(wdir) == -1) 
+  if (fchdir(wdir) == -1)
     strerr_warn2(WARN, "unable to switch to starting directory: ", &strerr_sys);
   close(wdir);
   if (rc > 100) rc =100;

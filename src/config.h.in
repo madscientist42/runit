@@ -1,5 +1,8 @@
 /* Generated content, DO NOT EDIT.  Re-run "cmake ." with the cache cleared. */
 
+#if !defined(__CONFIG_H_)
+#define __CONFIG_H_
+
 /* Project level definitions and paths */
 #define ETC_PREFIX "@CMAKE_INSTALL_FULL_SYSCONFDIR@"
 #define VERSION "@VERSION@"
@@ -17,3 +20,5 @@
 /* For now, declare what uint64 is...  (Shouldn't really NEED to do this 
    with any *MODERN* os, but...) */
 typedef unsigned @UINT64_TYPEDEF@ uint64;
+
+#endif // __CONFIG_H_

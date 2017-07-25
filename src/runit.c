@@ -95,8 +95,7 @@ int main (int argc, const char * const *argv, char * const *envp) {
   if (RB_DISABLE_CAD == 0) reboot_system(0);
 #endif
 
-  strerr_warn3(INFO, "$Id: 25da3b86f7bed4038b8a039d2f8e8c9bbcf0822b $",
-               ": booting.", 0);
+  strerr_warn3(INFO, VERSION, ": booting.", 0);
 
   /* runit */
   for (st =0; st < 3; st++) {
@@ -114,7 +113,7 @@ int main (int argc, const char * const *argv, char * const *envp) {
       /* stage 1 gets full control of console */
       if (st == 0) {
         if ((ttyfd =open("/dev/console", O_RDWR)) != -1) {
-#ifdef TIOCSCTTY 
+#ifdef TIOCSCTTY
           ioctl(ttyfd, TIOCSCTTY, (char *)0);
 #endif
           dup2(ttyfd, 0);
@@ -136,7 +135,7 @@ int main (int argc, const char * const *argv, char * const *envp) {
       sig_uncatch(sig_int);
       sig_unblock(sig_pipe);
       sig_unblock(sig_term);
-            
+
       strerr_warn3(INFO, "enter stage: ", stage[st], 0);
       execve(*prog, (char *const *)prog, envp);
       strerr_die4sys(0, FATAL, "unable to start child: ", stage[st], ": ");
@@ -161,7 +160,7 @@ int main (int argc, const char * const *argv, char * const *envp) {
       sig_block(sig_cont);
       sig_block(sig_child);
       sig_block(sig_int);
-      
+
       while (read(selfpipe[0], &ch, 1) == 1) {}
       while ((child =wait_nohang(&wstat)) > 0)
         if (child == pid) break;
@@ -264,7 +263,7 @@ int main (int argc, const char * const *argv, char * const *envp) {
             break;
           }
           if (child) continue;
-          if (child == -1) 
+          if (child == -1)
             strerr_warn2(WARNING, "wait_nohang: ", &strerr_sys);
 #ifdef DEBUG
           strerr_warn2(WARNING, "waiting...", 0);

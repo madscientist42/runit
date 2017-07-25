@@ -34,7 +34,6 @@
 #include "iopause.h"
 
 #define USAGE " [-ttv] [-r c] [-R abc] [-l len] [-b buflen] dir ..."
-#define VERSION "$Id: 5e55a90e0a1b35ec47fed3021453c50675ea1117 $"
 
 #define FATAL "svlogd: fatal: "
 #define WARNING "svlogd: warning: "
@@ -137,7 +136,7 @@ unsigned int processorstart(struct logdir *ld) {
     sig_unblock(sig_term);
     sig_unblock(sig_alarm);
     sig_unblock(sig_hangup);
-    
+
     if (verbose)
       strerr_warn5(INFO, "processing: ", ld->name, "/", ld->fnsave, 0);
     if ((fd =open_read(ld->fnsave)) == -1)
@@ -388,7 +387,7 @@ unsigned int ip4_scan(const char *s,char ip[4])
   unsigned int i;
   unsigned int len;
   unsigned long u;
- 
+
   len = 0;
   i = scan_ulong(s,&u); if (!i) return 0; ip[0] = u; s += i; len += i;
   if (*s != '.') return 0; ++s; ++len;
@@ -550,12 +549,12 @@ unsigned int logdir_open(struct logdir *ld, const char *fn) {
   while (fchmod(ld->fdcur, 0644) == -1)
     pause2("unable to set mode of current", ld->name);
   buffer_init(&ld->b, buffer_pwrite, ld -dir, ld->btmp, buflen);
-  
+
   if (verbose) {
     if (i == 0) strerr_warn4(INFO, "append: ", ld->name, "/current", 0);
     else strerr_warn4(INFO, "new: ", ld->name, "/current", 0);
   }
-  
+
   while (fchdir(fdwdir) == -1)
     pause1("unable to change to initial working directory");
   return(1);
@@ -568,7 +567,7 @@ void logdirs_reopen(void) {
   tmaxflag =0;
   taia_now(&now);
   for (l =0; l < dirn; ++l) {
-    logdir_close(&dir[l]);    
+    logdir_close(&dir[l]);
     if (logdir_open(&dir[l], fndir[l])) ok =1;
   }
   if (! ok) fatalx("no functional log directories.");
@@ -839,7 +838,7 @@ int main(int argc, const char **argv) {
         }
       }
   }
-  
+
   for (i =0; i < dirn; ++i) {
     if (dir[i].ppid) while (! processorstop(&dir[i]));
     logdir_close(&dir[i]);

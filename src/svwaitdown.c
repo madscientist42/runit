@@ -12,8 +12,6 @@
 #define INFO "svwaitdown: "
 #define USAGE " [-v] [-t 1..6000] service ..."
 
-#define VERSION "$Id: 6cd3efc2e15e5e3d2fa60cd0c028e60958676ec7 $"
-
 const char *progname;
 const char * const *dir;
 unsigned int rc =0;
@@ -38,9 +36,9 @@ int main(int argc, const char * const *argv) {
   unsigned long pid;
   struct tai start;
   struct tai now;
-  
+
   progname =*argv;
-  
+
   while ((opt =getopt(argc, argv, "t:xkvV")) != opteof) {
     switch(opt) {
     case 't':
@@ -135,7 +133,7 @@ int main(int argc, const char * const *argv) {
       }
       close(fd);
     }
-  
+
     tai_now(&now);
     tai_sub(&now, &now, &start);
     if (tai_approx(&now) >= sec) {
@@ -169,7 +167,7 @@ int main(int argc, const char * const *argv) {
     }
     sleep(1);
   }
-  if (fchdir(wdir) == -1) 
+  if (fchdir(wdir) == -1)
     strerr_warn2(WARN, "unable to switch to starting directory: ", &strerr_sys);
   close(wdir);
   if (rc > 100) rc =100;
