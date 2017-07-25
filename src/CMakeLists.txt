@@ -1,8 +1,8 @@
 # Declare the runit libraries...
 #
 # (All runit core lib functions are static linkages based on original build system...)
-ADD_LIBRARY(runit_byte STATIC 
-	byte_chr.c 
+ADD_LIBRARY(runit_byte STATIC
+	byte_chr.c
 	byte_copy.c
 	byte_cr.c
 	byte_diff.c
@@ -17,68 +17,68 @@ ADD_LIBRARY(runit_byte STATIC
 	str_start.c)
 
 ADD_LIBRARY(runit_time STATIC
-	iopause.c 
-	tai_now.c 
-	tai_pack.c 
-	tai_sub.c 
+	iopause.c
+	tai_now.c
+	tai_pack.c
+	tai_sub.c
 	tai_unpack.c
-	taia_add.c 
-	taia_approx.c 
-	taia_frac.c 
-	taia_less.c 
+	taia_add.c
+	taia_approx.c
+	taia_frac.c
+	taia_less.c
 	taia_now.c
 	taia_pack.c
 	taia_sub.c
 	taia_uint.c)
 
 ADD_LIBRARY(runit_unix STATIC
-	alloc.c 
-	alloc_re.c 
-	buffer.c 
-	buffer_0.c 
-	buffer_1.c 
-	buffer_2.c 
-	buffer_get.c 
-	buffer_put.c 
-	buffer_read.c 
-	buffer_write.c 
-	coe.c 
-	env.c 
-	error.c 
-	error_str.c 
-	fd_copy.c 
-	fd_move.c 
-	fifo.c 
-	lock_ex.c 
-	lock_exnb.c 
-	ndelay_off.c 
-	ndelay_on.c 
-	open_append.c 
-	open_read.c 
-	open_trunc.c 
-	open_write.c 
-	openreadclose.c 
-	pathexec_env.c 
-	pathexec_run.c 
-	prot.c 
-	readclose.c 
-	seek_set.c 
-	sgetopt.c 
-	sig.c 
-	sig_block.c 
-	sig_catch.c 
-	sig_pause.c 
-	stralloc_cat.c 
-	stralloc_catb.c 
-	stralloc_cats.c 
-	stralloc_eady.c 
-	stralloc_opyb.c 
-	stralloc_opys.c 
-	stralloc_pend.c 
-	strerr_die.c 
-	strerr_sys.c 
-	subgetopt.c 
-	wait_nohang.c 
+	alloc.c
+	alloc_re.c
+	buffer.c
+	buffer_0.c
+	buffer_1.c
+	buffer_2.c
+	buffer_get.c
+	buffer_put.c
+	buffer_read.c
+	buffer_write.c
+	coe.c
+	env.c
+	error.c
+	error_str.c
+	fd_copy.c
+	fd_move.c
+	fifo.c
+	lock_ex.c
+	lock_exnb.c
+	ndelay_off.c
+	ndelay_on.c
+	open_append.c
+	open_read.c
+	open_trunc.c
+	open_write.c
+	openreadclose.c
+	pathexec_env.c
+	pathexec_run.c
+	prot.c
+	readclose.c
+	seek_set.c
+	sgetopt.c
+	sig.c
+	sig_block.c
+	sig_catch.c
+	sig_pause.c
+	stralloc_cat.c
+	stralloc_catb.c
+	stralloc_cats.c
+	stralloc_eady.c
+	stralloc_opyb.c
+	stralloc_opys.c
+	stralloc_pend.c
+	strerr_die.c
+	strerr_sys.c
+	subgetopt.c
+	wait_nohang.c
 	wait_pid.c)
 
 
@@ -88,7 +88,7 @@ TARGET_LINK_LIBRARIES(runit runit_unix runit_byte)
 
 ADD_EXECUTABLE(runit-init runit-init.c)
 TARGET_LINK_LIBRARIES(runit-init runit_unix runit_byte)
- 
+
 ADD_EXECUTABLE(runsv runsv.c)
 TARGET_LINK_LIBRARIES(runsv runit_unix runit_byte runit_time)
 
@@ -104,5 +104,11 @@ TARGET_LINK_LIBRARIES(runsvcrtl runit_unix runit_byte runit_time)
 ADD_EXECUTABLE(sv sv.c)
 TARGET_LINK_LIBRARIES(sv runit_unix runit_byte runit_time)
 
-INSTALL(TARGETS runit runit-init runsv runsvdir runsvstat runsvcrtl sv DESTINATION ${CMAKE_INSTALL_SBINDIR})
+ADD_EXECUTABLE(svwaitup svwaitup.c)
+TARGET_LINK_LIBRARIES(svwaitup runit_unix runit_byte runit_time)
 
+ADD_EXECUTABLE(svwaitdown svwaitdown.c)
+TARGET_LINK_LIBRARIES(svwaitdown runit_unix runit_byte runit_time)
+
+
+INSTALL(TARGETS runit runit-init runsv runsvdir runsvstat runsvcrtl sv DESTINATION ${CMAKE_INSTALL_SBINDIR})
