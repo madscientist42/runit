@@ -4,6 +4,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
+
+#include "config.h"
 #include "uw_tmp.h"
 #include "strerr.h"
 #include "sgetopt.h"
