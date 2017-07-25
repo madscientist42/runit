@@ -1,20 +1,26 @@
 #include <sys/types.h>
 
-/* NOTE: FreeBSD migrated to utmpx...
-   This has some different interfaces.  I have more work to do on this...   
-*/
+#if defined(HASUTMPX) && !defined(HASUTMP)
 
-#ifdef HASUTMPX
+/* FreeBSD migrated to utmpx- thing is that this doesn't play nice with
+   all "Unices" because some distributions have the header.  If both are
+   present, for now, pick the utmp.h path... */
+
 #include <utmpx.h>
-typedef struct utmpx uw_tmp;
+
 #ifdef _PATH_UTMPX
 #define UW_TMP_UFILE _PATH_UTMPX    /* utmpx does not separate utmp and wtmp, woe later! */
 #define UW_TMP_WFILE _PATH_UTMPX
 #endif
 
-#else
-#include <utmp.h>
+#ifndef ut_time
+#define ut_time ut_tv.tv_sec
+#endif
+typedef struct utmpx uw_tmp;
 
+#else
+
+#include <utmp.h>
 #ifdef _PATH_UTMP
   #define UW_TMP_UFILE _PATH_UTMP
   #define UW_TMP_WFILE _PATH_WTMP
@@ -28,5 +34,5 @@ typedef struct utmpx uw_tmp;
   #endif
 #endif
 typedef struct utmp uw_tmp;
-#endif
 
+#endif

@@ -7,3 +7,4 @@ Makefile
 config.h
 build/
 install_manifest.txt
+*.gch
