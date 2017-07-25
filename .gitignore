@@ -6,3 +6,4 @@ cmake_install.cmake
 Makefile
 config.h
 build/
+install_manifest.txt
