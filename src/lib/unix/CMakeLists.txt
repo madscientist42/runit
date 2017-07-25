@@ -1,7 +1,7 @@
 # Declare the runit libraries...
 #
 # (All runit core lib functions are static linkages based on original build system...)
-ADD_LIBRARY(runit_unix STATIC
+ADD_LIBRARY(unix OBJECT
 	alloc.c
 	alloc_re.c
 	buffer.c

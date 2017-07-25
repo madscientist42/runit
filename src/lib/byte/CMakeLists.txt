@@ -1,7 +1,7 @@
 # Declare the runit libraries...
 #
 # (All runit core lib functions are static linkages based on original build system...)
-ADD_LIBRARY(runit_byte STATIC
+ADD_LIBRARY(byte OBJECT
 	byte_chr.c
 	byte_copy.c
 	byte_cr.c

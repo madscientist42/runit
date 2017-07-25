@@ -1,7 +1,7 @@
 # Declare the runit libraries...
 #
 # (All runit core lib functions are static linkages based on original build system...)
-ADD_LIBRARY(runit_time STATIC
+ADD_LIBRARY(time OBJECT
 	iopause.c
 	tai_now.c
 	tai_pack.c
