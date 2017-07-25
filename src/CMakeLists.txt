@@ -78,6 +78,7 @@ ADD_LIBRARY(runit_unix STATIC
 	strerr_die.c
 	strerr_sys.c
 	subgetopt.c
+	uidgid.c
 	wait_nohang.c
 	wait_pid.c)
 
@@ -112,5 +113,12 @@ TARGET_LINK_LIBRARIES(svwaitdown runit_unix runit_byte runit_time)
 
 ADD_EXECUTABLE(utmpset utmpset.c)
 TARGET_LINK_LIBRARIES(utmpset runit_unix runit_byte)
+
+ADD_EXECUTABLE(runsvchdir runsvchdir.c)
+TARGET_LINK_LIBRARIES(runsvchdir runit_unix runit_byte)
+
+ADD_EXECUTABLE(chpst chpst.c)
+TARGET_LINK_LIBRARIES(chpst runit_unix runit_byte runit_time)
+
 
 INSTALL(TARGETS runit runit-init runsv runsvdir runsvstat runsvcrtl sv DESTINATION ${CMAKE_INSTALL_SBINDIR})
