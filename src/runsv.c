@@ -22,8 +22,6 @@
 
 #define USAGE " dir"
 
-#define VERSION "$Id: ecf467746d7b97ff0fddb88b9d44cca201c74160 $"
-
 char *progname;
 int selfpipe[2];
 
@@ -292,7 +290,7 @@ void startservice(struct svdir *s) {
           fatal("unable to setup filedescriptor for ./log/run");
         close(logpipe[1]);
         if (chdir("./log") == -1)
-          fatal("unable to change directory to ./log");        
+          fatal("unable to change directory to ./log");
       }
       else {
         if (fd_copy(1, logpipe[1]) == -1)
@@ -396,7 +394,7 @@ int main(int argc, char **argv) {
   coe(selfpipe[1]);
   ndelay_on(selfpipe[0]);
   ndelay_on(selfpipe[1]);
-  
+
   sig_block(sig_child);
   sig_catch(sig_child, s_child);
   sig_block(sig_term);
@@ -460,7 +458,7 @@ int main(int argc, char **argv) {
         if ((fd =open_read(".")) == -1)
           fatal("unable to open current directory");
         if (chdir("./log") == -1)
-          fatal("unable to change directory to ./log"); 
+          fatal("unable to change directory to ./log");
         mkdir(buf, 0700);
         if (fchdir(fd) == -1)
           fatal("unable to change back to service directory");
@@ -549,7 +547,7 @@ int main(int argc, char **argv) {
     for (;;) {
       int child;
       int wstat;
-      
+
       child =wait_nohang(&wstat);
       if (!child) break;
       if ((child == -1) && (errno != error_intr)) break;

@@ -324,7 +324,7 @@ int main(int argc, const char **argv) {
     case '0': nostdin =1; break;
     case '1': nostdout =1; break;
     case '2': nostderr =1; break;
-    case 'V': strerr_warn1("$Id: f279d44141c981dd7535a12260efcf1ef7beed26 $", 0);
+    case 'V': strerr_warn1(VERSION, 0);
     case '?': usage();
     }
   argv +=optind;
@@ -451,7 +451,7 @@ void getlarg(long *l) {
 }
 void softlimit(int argc, const char *const *argv) {
   int opt;
-  
+
   while ((opt =getopt(argc,argv,"a:c:d:f:l:m:o:p:r:s:t:")) != opteof)
     switch(opt) {
     case '?': softlimit_usage();

@@ -17,7 +17,6 @@
 #include "ndelay.h"
 
 #define USAGE " [-P] dir"
-#define VERSION "$Id: ecebd0a50510e91639c6a45dda8b0947aa8eb885 $"
 
 #define MAXSERVICES 1000
 
@@ -50,7 +49,7 @@ void warn(char *m1, char *m2) {
 }
 void warn3x(char *m1, char *m2, char *m3) {
   strerr_warn6("runsvdir ", svdir, ": warning: ", m1, m2, m3, 0);
-} 
+}
 void s_term() { exitsoon =1; }
 void s_hangup() { exitsoon =2; }
 
@@ -191,7 +190,7 @@ int main(int argc, char **argv) {
       warn3x("log service disabled.", 0, 0);
     }
   }
-  if ((curdir =open_read(".")) == -1) 
+  if ((curdir =open_read(".")) == -1)
     fatal("unable to open current directory", 0);
   coe(curdir);
 
@@ -223,7 +222,7 @@ int main(int argc, char **argv) {
       /* wait at least a second */
       taia_uint(&deadline, 1);
       taia_add(&stampcheck, &now, &deadline);
-      
+
       if (stat(svdir, &s) != -1) {
         if (check || \
             s.st_mtime != mtime || s.st_ino != ino || s.st_dev != dev) {

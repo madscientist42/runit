@@ -17,8 +17,6 @@
 #define USAGE " [-v] [-w sec] command service ..."
 #define USAGELSB " [-w sec] command"
 
-#define VERSION "$Id: 900314260c6d52c986c5357673bea2f3bd3f4698 $"
-
 #define FATAL   "fatal: "
 #define FAIL    "fail: "
 #define WARN    "warning: "
@@ -116,7 +114,7 @@ unsigned int svstatus_print(char *m) {
   int pid;
   int normallyup =0;
   struct stat s;
- 
+
   if (stat("down", &s) == -1) {
     if (errno != error_noent) {
       outs2(WARN); outs2("unable to stat "); outs2(*service); outs2("/down: ");
