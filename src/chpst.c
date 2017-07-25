@@ -3,6 +3,7 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <unistd.h>
+#include <grp.h>
 #include "sgetopt.h"
 #include "error.h"
 #include "strerr.h"
