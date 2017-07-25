@@ -110,5 +110,7 @@ TARGET_LINK_LIBRARIES(svwaitup runit_unix runit_byte runit_time)
 ADD_EXECUTABLE(svwaitdown svwaitdown.c)
 TARGET_LINK_LIBRARIES(svwaitdown runit_unix runit_byte runit_time)
 
+ADD_EXECUTABLE(utmpset utmpset.c)
+TARGET_LINK_LIBRARIES(utmpset runit_unix runit_byte)
 
 INSTALL(TARGETS runit runit-init runsv runsvdir runsvstat runsvcrtl sv DESTINATION ${CMAKE_INSTALL_SBINDIR})
