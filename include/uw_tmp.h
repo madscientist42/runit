@@ -1,5 +1,18 @@
 #include <sys/types.h>
 
+/* NOTE: FreeBSD migrated to utmpx...
+   This has some different interfaces.  I have more work to do on this...   
+*/
+
+#ifdef HASUTMPX
+#include <utmpx.h>
+typedef struct utmpx uw_tmp;
+#ifdef _PATH_UTMPX
+#define UW_TMP_UFILE _PATH_UTMPX    /* utmpx does not separate utmp and wtmp, woe later! */
+#define UW_TMP_WFILE _PATH_UTMPX
+#endif
+
+#else
 #include <utmp.h>
 
 #ifdef _PATH_UTMP
@@ -15,3 +28,5 @@
   #endif
 #endif
 typedef struct utmp uw_tmp;
+#endif
+

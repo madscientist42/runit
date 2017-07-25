@@ -35,11 +35,21 @@ int utmp_logout(const char *line) {
     strerr_die4sys(111, FATAL, "unable to lock: ", UW_TMP_UFILE, ": ");
 
   while (read(fd, &ut, sizeof(uw_tmp)) == sizeof(uw_tmp)) {
+#ifdef HASUTMPX
+    if (!ut.ut_user[0] || (str_diff(ut.ut_line, line) != 0)) continue;
+    memset(ut.ut_user, 0, sizeof ut.ut_user);
+#else
     if (!ut.ut_name[0] || (str_diff(ut.ut_line, line) != 0)) continue;
     memset(ut.ut_name, 0, sizeof ut.ut_name);
+#endif
     memset(ut.ut_host, 0, sizeof ut.ut_host);
     if (time(&t) == -1) break;
+#ifdef HASUTMPX
+    ut.ut_tv.tv_sec = t;        /* for now, 1 sec accuracy... */
+    ut.ut_tv.tv_usec = 0;
+#else
     ut.ut_time = t;
+#endif
 #ifdef DEAD_PROCESS
     ut.ut_type =DEAD_PROCESS;
 #endif
@@ -74,7 +84,12 @@ int wtmp_logout(const char *line) {
     close(fd);
     return(-1);
   }
+#ifdef HASUTMPX
+  ut.ut_tv.tv_sec = t;
+  ut.ut_tv.tv_usec = 0;
+#else
   ut.ut_time = t;
+#endif
 #ifdef DEAD_PROCESS
   ut.ut_type =DEAD_PROCESS;
 #endif
