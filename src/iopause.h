@@ -5,7 +5,10 @@
 
 #include "config.h"
 
+//TODO: I think poll/pollfd  is normal and widespread now...this should really be about
+// poll vs select.
 #if defined(HASPOLL)
+	#include <sys/select.h>
 	typedef struct 
 	{
 		int fd;

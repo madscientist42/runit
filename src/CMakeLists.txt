@@ -1,4 +1,3 @@
-
 # Declare the runit libraries...
 #
 # (All runit core lib functions are static linkages based on original build system...)
@@ -104,4 +103,6 @@ TARGET_LINK_LIBRARIES(runsvcrtl runit_unix runit_byte runit_time)
 
 ADD_EXECUTABLE(sv sv.c)
 TARGET_LINK_LIBRARIES(sv runit_unix runit_byte runit_time)
+
+INSTALL(TARGETS runit runit-init runsv runsvdir runsvstat runsvcrtl sv DESTINATION ${CMAKE_INSTALL_SBINDIR})
 

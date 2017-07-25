@@ -1,5 +1,9 @@
 /* Generated content, DO NOT EDIT.  Re-run "cmake ." with the cache cleared. */
 
+/* Project level definitions and paths */
+#define ETC_PREFIX "@CMAKE_INSTALL_FULL_SYSCONFDIR@"
+#define VERSION "@VERSION@"
+
 /* Define our key hints to the source tree...  */
 #cmakedefine HASDIRENT 1
 #cmakedefine HASPOLL 1

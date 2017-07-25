@@ -1,7 +1,6 @@
 /* Public domain. */
 
 #include "taia.h"
-#include "select.h"
 #include "iopause.h"
 
 void iopause(iopause_fd *x,unsigned int len,struct taia *deadline,struct taia *stamp)
