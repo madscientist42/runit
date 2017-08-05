@@ -16,3 +16,9 @@ INCLUDE(ConfigureChecks.cmake)
 # Add the various subdirectories for sourcecode, etc...
 ADD_SUBDIRECTORY(src)
 
+add_custom_target(dist
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    COMMAND "${CMAKE_COMMAND}" -E remove -F "${CMAKE_CURRENT_BINARY_DIR}/runit-*.tar.gz"
+    COMMAND git archive -o "${CMAKE_CURRENT_BINARY_DIR}/runit-${VERSION}.tar.gz" --format tar.gz --prefix="runit-${VERSION}/" HEAD
+)
+

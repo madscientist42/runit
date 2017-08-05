@@ -8,3 +8,4 @@ config.h
 build/
 install_manifest.txt
 *.gch
+*.tar.gz
