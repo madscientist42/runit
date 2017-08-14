@@ -2,7 +2,7 @@
 
 CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
 PROJECT (runit)
-set(VERSION "2.2.0")
+set(VERSION "2.1.3")
 
 # Specify where we're dropping things- the end-user of this system
 # can specify elsewhere, but we're going to pour it here to make
