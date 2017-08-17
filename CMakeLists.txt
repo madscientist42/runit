@@ -13,6 +13,9 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 INCLUDE(GNUInstallDirs)
 INCLUDE(ConfigureChecks.cmake)
 
+# Declare our project's additional include path entries...
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 # Add the various subdirectories for sourcecode, etc...
 ADD_SUBDIRECTORY(src)
 
