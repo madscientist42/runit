@@ -14,7 +14,8 @@ INCLUDE(GNUInstallDirs)
 INCLUDE(ConfigureChecks.cmake)
 
 # Declare our project's additional include path entries...
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # Add the various subdirectories for sourcecode, etc...
 ADD_SUBDIRECTORY(src)
