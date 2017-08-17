@@ -7,7 +7,9 @@ set(VERSION "2.1.3")
 # Specify where we're dropping things- the end-user of this system
 # can specify elsewhere, but we're going to pour it here to make
 # it easier on us...
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
+endif()
 
 # Do our up-front config checks...
 INCLUDE(GNUInstallDirs)
