@@ -1,7 +1,3 @@
-
-# Declare our project's additional include path entries...
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${CMAKE_SOURCE_DIR}/include")
-
 # Bring in/build our library components...
 ADD_SUBDIRECTORY(lib)
 
