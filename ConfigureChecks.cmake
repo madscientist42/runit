@@ -33,6 +33,5 @@ else (SIZEOF_LONG EQUAL 4)
 	endif (SIZEOF_LONG EQUAL 8)
 endif (SIZEOF_LONG EQUAL 4)
 
-
-# Jam out a config.h in the sources directory...
-CONFIGURE_FILE(include/config.h.in include/config.h)
+# Jam out a config.h
+CONFIGURE_FILE(include/config.h.in ${CMAKE_BINARY_DIR}/include/config.h)
