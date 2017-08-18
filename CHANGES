@@ -1,3 +1,8 @@
+2.1.3
+Tue, 15 Aug 2017
+  * Reworked directory structure for more maintainability.
+  * Reworked build system to use CMake instead of the one previously used.
+
 2.1.2
 Sun, 10 Aug 2014 18:01:54 +0000
   * doc/index.html: reorder, cleanup links to distributions; add Linux
