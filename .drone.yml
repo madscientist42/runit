@@ -1,0 +1,7 @@
+pipeline:
+  build:
+    image: in1t3r/runit:v0.1
+    commands:
+      - cmake CMakeLists.txt
+      - make
+      
