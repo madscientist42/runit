@@ -1,7 +1,3 @@
-
-# Declare our project's additional include path entries...
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${CMAKE_SOURCE_DIR}/include")
-
 # Bring in/build our library components...
 ADD_SUBDIRECTORY(lib)
 
@@ -43,4 +39,17 @@ ADD_EXECUTABLE(chpst chpst.c)
 TARGET_LINK_LIBRARIES(chpst runit_runtime)
 
 # Set destinations for things...binaries go in /usr/sbin or /usr/local/sbin...
-INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/build/. DESTINATION ${CMAKE_INSTALL_SBINDIR} FILES_MATCHING PATTERN "*")
+INSTALL(TARGETS
+    runit
+    runit-init
+    runsv
+    runsvdir
+    runsvstat
+    runsvcrtl
+    sv
+    svwaitup
+    svwaitdown
+    utmpset
+    runsvchdir
+    chpst
+    DESTINATION ${CMAKE_INSTALL_SBINDIR})
