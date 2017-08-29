@@ -1,6 +1,6 @@
 # a version for testing with later cmake, EXPERIMENTAL....
 
-CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED (VERSION 2.8.8)
 PROJECT (runit)
 set(VERSION "2.1.3")
 
