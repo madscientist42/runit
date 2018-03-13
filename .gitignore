@@ -9,3 +9,6 @@ build/
 install_manifest.txt
 *.gch
 *.tar.gz
+.cproject
+.project
+.settings/
