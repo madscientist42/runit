@@ -3,18 +3,18 @@
 #include "fmt.h"
 
 unsigned int fmt_ptime2(char *s, struct taia *ta, char sep) {
-  struct tm *t;
+  struct tm t;
   time_t u;
 
   if (ta->sec.x < 4611686018427387914ULL) return(0); /* impossible? */
   u =ta->sec.x -4611686018427387914ULL;
-  if (! (t =gmtime((time_t*)&u))) return(0);
-  fmt_ulong(s, 1900 +t->tm_year);
-  s[4] ='-'; fmt_uint0(&s[5], t->tm_mon +1, 2);
-  s[7] ='-'; fmt_uint0(&s[8], t->tm_mday, 2);
-  s[10] =sep; fmt_uint0(&s[11], t->tm_hour, 2);
-  s[13] =':'; fmt_uint0(&s[14], t->tm_min, 2);
-  s[16] =':'; fmt_uint0(&s[17], t->tm_sec, 2);
+  if (gmtime_r(&u, &t) == NULL) return(0);
+  fmt_ulong(s, 1900 +t.tm_year);
+  s[4] ='-'; fmt_uint0(&s[5], t.tm_mon +1, 2);
+  s[7] ='-'; fmt_uint0(&s[8], t.tm_mday, 2);
+  s[10] =sep; fmt_uint0(&s[11], t.tm_hour, 2);
+  s[13] =':'; fmt_uint0(&s[14], t.tm_min, 2);
+  s[16] =':'; fmt_uint0(&s[17], t.tm_sec, 2);
   s[19] ='.'; fmt_uint0(&s[20], ta->nano, 9);
   return(25);
 }

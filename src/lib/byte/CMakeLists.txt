@@ -10,6 +10,7 @@ ADD_LIBRARY(byte OBJECT
 	fmt_uint.c
 	fmt_uint0.c
 	fmt_ulong.c
+	fmt_ptime.c
 	scan_ulong.c
 	str_chr.c
 	str_diff.c
