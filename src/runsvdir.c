@@ -264,7 +264,7 @@ int main(int argc, char **argv) {
       iopause(0, 0, &deadline, &now);
     sig_unblock(sig_child);
 
-    if (rplog && (io[0].revents | IOPAUSE_READ))
+    if (rplog && (io[0].revents & IOPAUSE_READ))
       while (read(logpipe[0], &ch, 1) > 0)
         if (ch) {
           for (i =6; i < rploglen; i++)

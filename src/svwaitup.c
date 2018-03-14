@@ -25,7 +25,7 @@ void warn(const char *s1, const char *s2, struct strerr *e) {
 }
 void usage() { strerr_die4x(1, "usage: ", progname, USAGE, "\n"); }
 
-int main(int argc, const char * const *argv) {
+int main(int argc, const char *argv[]) {
   int opt;
   int verbose =0;
   char status[18];

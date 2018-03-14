@@ -102,7 +102,7 @@ int wtmp_logout(const char *line) {
   return(1);
 }
 
-int main (int argc, const char * const *argv, const char * const *envp) {
+int main (int argc, const char *argv[], const char *envp[]) {
   int opt;
   int wtmp =0;
 
