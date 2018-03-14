@@ -1,6 +1,6 @@
 #include <unistd.h>
+#include <errno.h>
 #include "strerr.h"
-#include "error.h"
 #include "sgetopt.h"
 #include "scan.h"
 #include "open.h"
@@ -86,7 +86,7 @@ int main(int argc, const char * const *argv) {
       continue;
     }
     if ((fd =open_write("supervise/ok")) == -1) {
-      if (errno == error_nodevice) {
+      if (errno == ENXIO) {
         if (verbose) strerr_warn3(INFO, *dir, ": runsv not running.", 0);
         dir++;
       }
@@ -145,7 +145,7 @@ int main(int argc, const char * const *argv) {
           continue;
         }
         if ((fd =open_write("supervise/control")) == -1) {
-          if (errno == error_nodevice) {
+          if (errno == ENXIO) {
             if (verbose)
               strerr_warn3(INFO, *dir, ": runsv not running.", 0);
             dir++;

@@ -4,8 +4,8 @@
 #include <sys/resource.h>
 #include <unistd.h>
 #include <grp.h>
+#include <errno.h>
 #include "sgetopt.h"
-#include "error.h"
 #include "strerr.h"
 #include "str.h"
 #include "uidgid.h"
@@ -124,7 +124,7 @@ void edir(const char *dirname) {
     }
     if (d->d_name[0] == '.') continue;
     if (openreadclose(d->d_name, &sa, 256) == -1) {
-      if ((errno == error_isdir) && env_dir) {
+      if ((errno == EISDIR) && env_dir) {
         if (verbose)
           strerr_warn6(WARNING, "unable to read ", dirname, "/",
                        d->d_name, ": ", &strerr_sys);

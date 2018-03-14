@@ -1,6 +1,9 @@
 /* Public domain. */
 
+// FIXME -- Review for refactor/replace.  This is goofy and doesn't QUITE do what Gerrit thought it did.
+
 #include <stdlib.h>
+#include <errno.h>
 #include "alloc.h"
 #include "error.h"
 
@@ -19,7 +22,7 @@ unsigned int n;
   n = ALIGNMENT + n - (n & (ALIGNMENT - 1)); /* XXX: could overflow */
   if (n <= avail) { avail -= n; return space + avail; }
   x = malloc(n);
-  if (!x) errno = error_nomem;
+  if (!x) errno = ENOMEM;
   return x;
 }
 

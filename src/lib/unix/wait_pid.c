@@ -2,7 +2,7 @@
 
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "error.h"
+#include <errno.h>
 #include "config.h"
 
 #ifdef HASWAITPID
@@ -13,7 +13,7 @@ int wait_pid(wstat,pid) int *wstat; int pid;
 
   do
     r = waitpid(pid,wstat,0);
-  while ((r == -1) && (errno == error_intr));
+  while ((r == -1) && (errno == EINTR));
   return r;
 }
 
@@ -34,7 +34,7 @@ int wait_pid(wstat,pid) int *wstat; int pid;
     r = wait(wstat);
     if ((r != pid) && (r != -1)) { oldwstat = *wstat; oldpid = r; continue; }
   }
-  while ((r == -1) && (errno == error_intr));
+  while ((r == -1) && (errno == EINTR));
   return r;
 }
 

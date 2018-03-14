@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <signal.h>
+#include <errno.h>
 #include "strerr.h"
-#include "error.h"
 #include "taia.h"
 #include "sig.h"
 #include "env.h"
@@ -228,7 +228,7 @@ unsigned int custom(struct svdir *s, char c) {
         fatal("unable to run control/?");
       }
       while (wait_pid(&w, pid) == -1) {
-        if (errno == error_intr) continue;
+        if (errno == EINTR) continue;
         warn2("unable to wait for child ", a);
         return(0);
       }
@@ -236,7 +236,7 @@ unsigned int custom(struct svdir *s, char c) {
     }
   }
   else {
-    if (errno == error_noent) return(0);
+    if (errno == ENOENT) return(0);
     warn2("unable to stat ", a);
   }
   return(0);
@@ -411,7 +411,7 @@ int main(int argc, char **argv) {
   if (stat("down", &s) != -1) svd[0].want =W_DOWN;
 
   if (stat("log", &s) == -1) {
-    if (errno != error_noent)
+    if (errno != ENOENT)
       warn("unable to stat() ./log: ");
   }
   else {
@@ -550,7 +550,7 @@ int main(int argc, char **argv) {
 
       child =wait_nohang(&wstat);
       if (!child) break;
-      if ((child == -1) && (errno != error_intr)) break;
+      if ((child == -1) && (errno != EINTR)) break;
       if (child == svd[0].pid) {
         svd[0].pid =0;
         pidchanged =1;

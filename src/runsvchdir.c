@@ -2,8 +2,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
 #include "strerr.h"
-#include "error.h"
 #include "buffer.h"
 
 #define USAGE " dir"
@@ -37,7 +37,7 @@ int main (int argc, char **argv) {
   if (chdir(SVDIR) == -1) fatal("unable to chdir: ", SVDIR);
 
   if (stat(new, &s) == -1) {
-    if (errno == error_noent) fatal(new, 0);
+    if (errno == ENOENT) fatal(new, 0);
     fatal("unable to stat: ", new);
   }
   if (! S_ISDIR(s.st_mode)) fatalx(new, "not a directory.");
@@ -53,11 +53,11 @@ int main (int argc, char **argv) {
   }
 
   if (unlink("current.new") == -1)
-    if (errno != error_noent) fatal("unable to unlink: ", "current.new");
+    if (errno != ENOENT) fatal("unable to unlink: ", "current.new");
   if (symlink(new, "current.new") == -1)
     fatal("unable to create: current.new -> ", new);
   if (unlink("previous") == -1)
-    if (errno != error_noent) fatal("unable to unlink: ", "previous");
+    if (errno != ENOENT) fatal("unable to unlink: ", "previous");
   if (rename("current", "previous") == -1)
     fatal("unable to copy: current to ", "previous");
   if (rename("current.new", "current") == -1) {

@@ -149,7 +149,7 @@ unsigned int processorstart(struct logdir *ld) {
     if (fd_move(1, fd) == -1)
       fatal2("unable to move filedescriptor for processor", ld->name);
     if ((fd =open_read("state")) == -1) {
-      if (errno == error_noent) {
+      if (errno == ENOENT) {
         if ((fd =open_trunc("state")) == -1)
           fatal2("unable to create empty state for processor", ld->name);
         close(fd);
@@ -269,7 +269,7 @@ unsigned int rotate(struct logdir *ld) {
     taia_now(&now);
     fmt_taia(ld->fnsave, &now);
     errno =0;
-  } while ((stat(ld->fnsave, &st) != -1) || (errno != error_noent));
+  } while ((stat(ld->fnsave, &st) != -1) || (errno != ENOENT));
 
   if (ld->tmax && taia_less(&ld->trotate, &now)) {
     taia_uint(&ld->trotate, ld->tmax);
@@ -526,7 +526,7 @@ unsigned int logdir_open(struct logdir *ld, const char *fn) {
         taia_now(&now);
         fmt_taia(ld->fnsave, &now);
         errno =0;
-      } while ((stat(ld->fnsave, &st) != -1) || (errno != error_noent));
+      } while ((stat(ld->fnsave, &st) != -1) || (errno != ENOENT));
       while (rename("current", ld->fnsave) == -1)
         pause2("unable to rename current", ld->name);
       rmoldest(ld);
@@ -536,7 +536,7 @@ unsigned int logdir_open(struct logdir *ld, const char *fn) {
       ld->size =st.st_size;
   }
   else
-    if (errno != error_noent) {
+    if (errno != ENOENT) {
       logdir_close(ld);
       warn2("unable to stat current", ld->name);
       while (fchdir(fdwdir) == -1)
@@ -608,8 +608,8 @@ int buffer_pread(int fd, char *s, unsigned int len) {
   sig_block(sig_hangup);
   i =read(fd, s, len);
   if (i == -1) {
-    if (errno == error_again) errno =error_intr;
-    if (errno != error_intr) warn("unable to read standard input");
+    if (errno == EAGAIN) errno =EINTR;
+    if (errno != EINTR) warn("unable to read standard input");
   }
   if (i > 0) linecomplete =(s[i -1] == '\n');
   return(i);

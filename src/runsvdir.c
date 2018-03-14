@@ -2,9 +2,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <signal.h>
+#include <errno.h>
 #include "direntry.h"
 #include "strerr.h"
-#include "error.h"
 #include "wait.h"
 #include "env.h"
 #include "open.h"

@@ -14,7 +14,6 @@ ADD_LIBRARY(unix OBJECT
 	buffer_write.c
 	coe.c
 	env.c
-	error.c
 	fd_copy.c
 	fd_move.c
 	fifo.c

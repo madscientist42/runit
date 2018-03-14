@@ -1,8 +1,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <errno.h>
 #include "strerr.h"
-#include "error.h"
 #include "sgetopt.h"
 #include "open.h"
 #include "buffer.h"
@@ -41,14 +41,14 @@ int show_status(char *name) {
   struct tai now;
 
   if (stat("down", &s) == -1) {
-    if (errno != error_noent) {
+    if (errno != ENOENT) {
       warn(name, "unable to stat down");
       return(-1);
     }
     normallyup = 1;
   }
   if ((fd =open_write("supervise/ok")) == -1) {
-    if (errno == error_nodevice)
+    if (errno == ENXIO)
       warnx(name, "runsv not running.");
     else
       warn(name, "unable to open supervise/ok");
@@ -138,7 +138,7 @@ int main(int argc, char **argv) {
     if (show_status(*dir) == 1) {
       if (showlog) {
         if (stat("log", &s) == -1) {
-          if (errno != error_noent)
+          if (errno != ENOENT)
             warn("unable to stat()", "./log");
         }
         else {

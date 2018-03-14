@@ -1,8 +1,9 @@
 /* Public domain. */
 
+#include <errno.h>
 #include "buffer.h"
 #include "byte.h"
-#include "error.h"
+
 
 static int oneread(int (*op)(),int fd,char *buf,unsigned int len)
 {
@@ -10,7 +11,7 @@ static int oneread(int (*op)(),int fd,char *buf,unsigned int len)
 
   for (;;) {
     r = op(fd,buf,len);
-    if (r == -1) if (errno == error_intr) continue;
+    if (r == -1) if (errno == EINTR) continue;
     return r;
   }
 }

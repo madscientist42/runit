@@ -1,6 +1,6 @@
 #include <unistd.h>
+#include <errno.h>
 #include "strerr.h"
-#include "error.h"
 #include "sgetopt.h"
 #include "scan.h"
 #include "open.h"
@@ -70,7 +70,7 @@ int main(int argc, const char * const *argv) {
       continue;
     }
     if ((fd =open_write("supervise/ok")) == -1) {
-      if (errno == error_nodevice)
+      if (errno == ENXIO)
         warn(*dir, ": runsv not running.", 0);
       else
         warn(*dir, ": unable to open supervise/ok: ", &strerr_sys);

@@ -1,9 +1,10 @@
 /* Public domain. */
 
+#include <errno.h>
 #include "buffer.h"
 #include "str.h"
 #include "byte.h"
-#include "error.h"
+
 
 static int allwrite(int (*op)(),int fd,const char *buf,unsigned int len)
 {
@@ -12,7 +13,7 @@ static int allwrite(int (*op)(),int fd,const char *buf,unsigned int len)
   while (len) {
     w = op(fd,buf,len);
     if (w == -1) {
-      if (errno == error_intr) continue;
+      if (errno == EINTR) continue;
       return -1; /* note that some data may have been written */
     }
 //TODO: probably meant as a return -1??? a break????    

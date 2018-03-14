@@ -1,9 +1,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <errno.h>
+#include <string.h>
 #include "str.h"
 #include "strerr.h"
-#include "error.h"
 #include "sgetopt.h"
 #include "open.h"
 #include "env.h"
@@ -71,7 +72,7 @@ void out(char *p, char *m1) {
   buffer_puts(buffer_1, m1);
   if (errno) {
     buffer_puts(buffer_1, ": ");
-    buffer_puts(buffer_1, error_str(errno));
+    buffer_puts(buffer_1, strerror(errno));
   }
   buffer_puts(buffer_1, "\n");
   buffer_flush(buffer_1);
@@ -89,7 +90,7 @@ void flush2(const char *s) { outs2(s); buffer_flush(buffer_2); }
 
 int svstatus_get() {
   if ((fd =open_write("supervise/ok")) == -1) {
-    if (errno == error_nodevice) {
+    if (errno == ENXIO) {
       *acts == 'x' ? ok("runsv not running") : failx("runsv not running");
       return(0);
     }
@@ -116,9 +117,9 @@ unsigned int svstatus_print(char *m) {
   struct stat s;
 
   if (stat("down", &s) == -1) {
-    if (errno != error_noent) {
+    if (errno != ENOENT) {
       outs2(WARN); outs2("unable to stat "); outs2(*service); outs2("/down: ");
-      outs2(error_str(errno)); flush2("\n");
+      outs2(strerror(errno)); flush2("\n");
       return(0);
     }
     normallyup =1;
@@ -157,7 +158,7 @@ int status(char *unused) {
   rc =svstatus_print(*service);
   islog =1;
   if (chdir("log") == -1) {
-    if (errno != error_noent) {
+    if (errno != ENOENT) {
       outs("; ");
       warn("unable to change directory");
     }
@@ -179,15 +180,15 @@ int checkscript() {
   int pid, w;
 
   if (stat("check", &s) == -1) {
-    if (errno == error_noent) return(1);
+    if (errno == ENOENT) return(1);
     outs2(WARN); outs2("unable to stat "); outs2(*service); outs2("/check: ");
-    outs2(error_str(errno)); flush2("\n");
+    outs2(strerror(errno)); flush2("\n");
     return(0);
   }
   /* if (!(s.st_mode & S_IXUSR)) return(1); */
   if ((pid =fork()) == -1) {
     outs2(WARN); outs2("unable to fork for "); outs2(*service);
-    outs2("/check: "); outs2(error_str(errno)); flush2("\n");
+    outs2("/check: "); outs2(strerror(errno)); flush2("\n");
     return(0);
   }
   if (!pid) {
@@ -196,13 +197,13 @@ int checkscript() {
     close(1);
     execve("check", prog, environ);
     outs2(WARN); outs2("unable to run "); outs2(*service); outs2("/check: ");
-    outs2(error_str(errno)); flush2("\n");
+    outs2(strerror(errno)); flush2("\n");
     _exit(0);
   }
   while (wait_pid(&w, pid) == -1) {
-    if (errno == error_intr) continue;
+    if (errno == EINTR) continue;
     outs2(WARN); outs2("unable to wait for child "); outs2(*service);
-    outs2("/check: "); outs2(error_str(errno)); flush2("\n");
+    outs2("/check: "); outs2(strerror(errno)); flush2("\n");
     return(0);
   }
   return(!wait_exitcode(w));
@@ -251,7 +252,7 @@ int control(char *a) {
   if (svstatus[17] == *a)
     if (*a != 'd' || svstatus[18] == 1) return(0); /* once w/o term */
   if ((fd =open_write("supervise/control")) == -1) {
-    if (errno != error_nodevice)
+    if (errno != ENXIO)
       warn("unable to open supervise/control");
     else
       *a == 'x' ? ok("runsv not running") : failx("runsv not running");

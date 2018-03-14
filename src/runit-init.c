@@ -2,12 +2,13 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <unistd.h>
+#include <errno.h>
 #include "config.h"
 #include "runit.h"
 #include "strerr.h"
 #include "sig.h"
 #include "open.h"
-#include "error.h"
+
 
 #define USAGE " 0|6"
 #define FATAL "init: fatal: "
@@ -23,7 +24,7 @@ void runit_halt () {
   if (chmod(STOPIT, 0100) == -1)
     strerr_die4sys(111, FATAL, "unable to chmod ", STOPIT, ": ");
   if (chmod(REBOOT, 0) == -1)
-    if (errno != error_noent)
+    if (errno != ENOENT)
       strerr_die4sys(111, FATAL, "unable to chmod ", REBOOT, ": ");
   kill(1, sig_cont);
   _exit(0);

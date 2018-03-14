@@ -1,6 +1,6 @@
 #include <unistd.h>
+#include <errno.h>
 #include "strerr.h"
-#include "error.h"
 #include "open.h"
 
 #define USAGE " u|d|o|p|c|h|a|i|q|1|2|t|k|x|e service ..."
@@ -27,7 +27,7 @@ int ctrl(char *name, char c) {
   int fd;
 
   if ((fd =open_write("supervise/control")) == -1) {
-    if (errno == error_nodevice)
+    if (errno == ENXIO)
       warnx(name, "runsv not running.");
     else
       warn(name, "unable to open supervise/control");

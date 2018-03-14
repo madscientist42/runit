@@ -1,7 +1,7 @@
 /* Public domain. */
 
 #include <unistd.h>
-#include "error.h"
+#include <errno.h>
 #include "readclose.h"
 
 int readclose_append(int fd,stralloc *sa,unsigned int bufsize)
@@ -10,7 +10,7 @@ int readclose_append(int fd,stralloc *sa,unsigned int bufsize)
   for (;;) {
     if (!stralloc_readyplus(sa,bufsize)) { close(fd); return -1; }
     r = read(fd,sa->s + sa->len,bufsize);
-    if (r == -1) if (errno == error_intr) continue;
+    if (r == -1) if (errno == EINTR) continue;
     if (r <= 0) { close(fd); return r; }
     sa->len += r;
   }

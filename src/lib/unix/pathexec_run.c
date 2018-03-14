@@ -1,11 +1,11 @@
 /* Public domain. */
 
-#include "error.h"
+#include <errno.h>
+#include <unistd.h>
 #include "stralloc.h"
 #include "str.h"
 #include "env.h"
 #include "pathexec.h"
-#include <unistd.h>
 
 static stralloc tmp;
 
@@ -34,9 +34,9 @@ void pathexec_run(const char *file,const char * const *argv,const char * const *
     if (!stralloc_0(&tmp)) return;
 
     execve(tmp.s,(char *const*)argv,(char*const*)envp);
-    if (errno != error_noent) {
+    if (errno != ENOENT) {
       savederrno = errno;
-      if ((errno != error_acces) && (errno != error_perm) && (errno != error_isdir)) return;
+      if ((errno != EACCES) && (errno != EPERM) && (errno != EISDIR)) return;
     }
 
     if (!path[split]) {
