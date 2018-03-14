@@ -9,8 +9,8 @@ void nope()
 
 int main()
 {
-  unsigned long x[4];
-  unsigned long y[4];
+  unsigned int x[4];
+  unsigned int y[4];
   int i;
   int j;
   char c;
