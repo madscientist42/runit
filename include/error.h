@@ -5,9 +5,13 @@
 
 /* 20030124: include <errno.h> -upcoming glibc changes */
 #include <errno.h>
+#include <string.h>
  
-/* extern int errno; */
 
+/* Handle Gerrit's remappings for now.  Need to be revisited properly- they're not usefully defined
+ * here and in error.c when they're properly, for POSIX systems, handled by errno.h and strerror.h
+ * instead of this odd configuration that is clearly to compensate for "broken" Unices      			FCE (03/13/18)
+ */
 extern int error_intr;
 extern int error_nomem;
 extern int error_noent;
@@ -27,7 +31,7 @@ extern int error_isdir;
 extern int error_connrefused;
 extern int error_notdir;
 
-extern const char *error_str(int);
-extern int error_temp(int);
+
+extern const char *error_str(int err);
 
 #endif

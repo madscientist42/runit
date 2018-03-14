@@ -3,6 +3,11 @@
 #include <errno.h>
 #include "error.h"
 
+const char *error_str(int err)
+{
+	return strerror(err);
+}
+
 /* warning: as coverage improves here, should update error_{str,temp} */
 
 int error_intr =

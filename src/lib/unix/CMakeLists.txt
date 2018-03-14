@@ -15,7 +15,6 @@ ADD_LIBRARY(unix OBJECT
 	coe.c
 	env.c
 	error.c
-	error_str.c
 	fd_copy.c
 	fd_move.c
 	fifo.c
