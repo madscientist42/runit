@@ -38,6 +38,10 @@ TARGET_LINK_LIBRARIES(runsvchdir runit_runtime)
 ADD_EXECUTABLE(chpst chpst.c)
 TARGET_LINK_LIBRARIES(chpst runit_runtime)
 
+ADD_EXECUTABLE(svlogd svlogd.c)
+TARGET_LINK_LIBRARIES(svlogd runit_runtime)
+   
+
 # Set destinations for things...binaries go in /usr/sbin or /usr/local/sbin...
 INSTALL(TARGETS
     runit
@@ -52,4 +56,5 @@ INSTALL(TARGETS
     utmpset
     runsvchdir
     chpst
+    svlogd
     DESTINATION ${CMAKE_INSTALL_SBINDIR})
