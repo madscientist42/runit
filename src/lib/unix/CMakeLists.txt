@@ -31,6 +31,7 @@ ADD_LIBRARY(unix OBJECT
 	pathexec_env.c
 	pathexec_run.c
 	prot.c
+    pmatch.c
 	readclose.c
 	seek_set.c
 	sgetopt.c
