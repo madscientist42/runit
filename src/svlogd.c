@@ -470,10 +470,11 @@ unsigned int logdir_open(struct logdir *ld, const char *fn) {
         scan_ulong(&sa.s[i +1], &ld->nmin);
         break;
       case 't':
-        switch (sa.s[scan_ulong(&sa.s[i +1], &ld->tmax) +i +1]) {
-        /* case 'd': ld->tmax *=24; */
-        case 'h': ld->tmax *=60;
-        case 'm': ld->tmax *=60;
+        /* Handle modifiers.  Do this the right way with breaks and all */
+        switch (sa.s[scan_ulong(&sa.s[i +1], &ld->tmax) +i +1]) {        
+            case 'd': ld->tmax *= (24 * 60 * 60); break;
+            case 'h': ld->tmax *= (60 * 60); break;
+            case 'm': ld->tmax *= 60; break;
         }
         if (ld->tmax) {
           taia_uint(&ld->trotate, ld->tmax);
