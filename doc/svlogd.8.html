@@ -70,8 +70,8 @@ program feeding its log data to <b>svlogd.</b>
 <p> 
 <h3><a name='sect6'>Config</a></h3>
 On startup, and after receiving
-a HUP signal, <b>svlogd</b> checks for each log directory <i>log</i> if the configuration
-file <i>log/config</i> exists, and if so, reads the file line by line and adjusts
+a HUP signal, <b>svlogd</b> checks for each log directory <i>logdir</i> if the configuration
+file <i>logdir/config</i> exists, and if so, reads the file line by line and adjusts
 configuration for <i>log</i> as follows: <p>
 If the line is empty, or starts with
 a &lsquo;&lsquo;#&rsquo;&rsquo;, it is ignored. A line of the form 
@@ -223,7 +223,7 @@ standard error. </dd>
 
 <h2><a name='sect9'>Signals</a></h2>
 If <b>svlogd</b> is sent a HUP signal, it closes and reopens
-all <i>logs</i>, and updates their configuration according to <i>log/config</i>. If <b>svlogd</b>
+all <i>logs</i>, and updates their configuration according to <i>logdir/config</i>. If <b>svlogd</b>
 has trouble opening a log directory, it prints a warning, and discards
 this log directory. If <b>svlogd</b> is unable to open all log directories given
 at the command line, it exits with an error. <p>
