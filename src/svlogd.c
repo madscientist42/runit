@@ -458,9 +458,10 @@ unsigned int logdir_open(struct logdir *ld, const char *fn) {
         while (! stralloc_0(&ld->inst)) pause_nomem();
         break;
       case 's':
+        /* Handle modifiers.  Do this the right way with breaks and all */
         switch (sa.s[scan_ulong(&sa.s[i +1], &ld->sizemax) +i +1]) {
-        case 'm': ld->sizemax *=1024;
-        case 'k': ld->sizemax *=1024;
+          case 'm': ld->sizemax *= 1024 * 1024; break;
+          case 'k': ld->sizemax *= 1024; break;
         }
         break;
       case 'n':
