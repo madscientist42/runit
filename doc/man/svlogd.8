@@ -155,7 +155,7 @@ On startup, and after receiving a HUP signal,
 checks for each log directory
 .I log
 if the configuration file
-.I log/config
+.I logdir/config
 exists, and if so, reads the file line by line and adjusts configuration for
 .I log
 as follows:
@@ -426,7 +426,7 @@ If
 is sent a HUP signal, it closes and reopens all
 .IR logs ,
 and updates their configuration according to
-.IR log/config .
+.IR logdir/config .
 If
 .B svlogd
 has trouble opening a log directory, it prints a warning, and discards this
