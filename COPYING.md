@@ -1,6 +1,6 @@
 Copyright (c) 2001-2008, Gerrit Pape
 
-Copyright (c) 2017-2021 Frank Earl, David Sugar
+Portions Copyright (c) 2017-2021 Frank Earl, David Sugar
 
 All rights reserved.
 
