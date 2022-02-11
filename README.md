@@ -26,7 +26,3 @@ sysv init structure that has gone before, is in keeping with the UNIX/*BSD/Linux
 of doing only init/services management, leaving _*other*_ programs/schemes to handle udev, 
 syslog, etc.
 
-All decisions undertaken by this project are to be done by general consensus of the participants 
-of this project.  Designs aren't to all be designed by committee, but any design decisions 
-desired to be implemented into mainline is to be agreed upon by the members of this project.
-
